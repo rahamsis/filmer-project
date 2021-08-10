@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="layouts/base-layouts :: head">
+	<meta charset="utf-8" />
+	<title>Inserta Actor</title>
+</head>
+
+<body>
+	<nav th:replace="layouts/base-layouts :: nav"></nav>
+	<h1>Formulario de actores</h1>
+
+	<div th:if="${actorGuardado}" th:text="${actorGuardado}"></div>
+
+	<form th:action="@{/actors/save-Actor}" th:object="${actor}" method="POST">
+		<select th:field="*{pelicula}">
+			<option th:value="${film.id}" th:text="${film.titulo}"></option>
+		</select>
+
+		<input type="text" placeholder="Ingrese actor" th:field="*{nombre}" />
+		<input type="text" placeholder="Ingrese apellidos" th:field="*{apellidos}" />
+
+		<button type="submit">Guardar Actor</button>
+	</form>
+</body>
+
+</html>

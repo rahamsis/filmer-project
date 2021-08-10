@@ -1,11 +1,16 @@
 package com.filmer.entities;
-import java.util.Date;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,16 +31,20 @@ public class Pelicula {
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(iso = ISO.DATE)
 	private Date FechaEstreno;
-	
-	public Pelicula(Long id, String titulo, String portada, Date fechaEstreno) {
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pelicula")
+	private List<Actor> actores;
+
+	public Pelicula(Long id, String titulo, String portada, Date fechaEstreno, List<Actor> actores) {
 		this.id = id;
 		this.titulo = titulo;
 		this.portada = portada;
 		this.FechaEstreno = fechaEstreno;
+		this.actores = actores;
 	}
-	
-public Pelicula() {
-		
+
+	public Pelicula() {
+
 	}
 
 	public Long getId() {
@@ -68,5 +77,17 @@ public Pelicula() {
 
 	public void setFechaEstreno(Date fechaEstreno) {
 		FechaEstreno = fechaEstreno;
+	}
+
+	public List<Actor> getActores() {
+		return actores;
+	}
+
+	public void setActores(List<Actor> actores) {
+		this.actores = actores;
+	}
+	
+	public void addActores(Actor actor) {
+		actores.add(actor);
 	}
 }
